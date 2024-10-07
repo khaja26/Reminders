@@ -81,7 +81,7 @@
 
 <script>
 // Open (or create) the database
-const request = indexedDB.open("mydb", 1);
+const request = indexedDB.open("Rdb", 1);
 
 request.onerror = function(event) {
   console.error("Database error: " + event.target.errorCode);
@@ -96,12 +96,12 @@ function fetchTasks() {
     return;
   }
 
-  const dbRequest = indexedDB.open("mydb", 1);
+  const dbRequest = indexedDB.open("Rdb", 1);
 
   dbRequest.onsuccess = function(event) {
     const db = event.target.result;
-    const transaction = db.transaction(["mytable"], "readonly");
-    const objectStore = transaction.objectStore("mytable");
+    const transaction = db.transaction(["Rtable"], "readonly");
+    const objectStore = transaction.objectStore("Rtable");
 
     const index = objectStore.index("taskDate");
     const request = index.getAll(selectedDate);

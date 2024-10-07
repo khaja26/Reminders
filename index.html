@@ -1,126 +1,126 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta charset="UTF-8">
-<title>My Reminders</title>
-<style>
-body {
-  font-family: "Lato", sans-serif;
-  background-color: #f0f0f0;
-  margin: 0;
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-}
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="UTF-8">
+  <title>My Reminders</title>
+  <style>
+    body {
+      font-family: "Lato", sans-serif;
+      background-color: #f0f0f0;
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+    }
 
-.sidenav {
-  height: 100%;
-  width: 0;
-  position: fixed;
-  z-index: 1;
-  top: 0;
-  left: 0;
-  background-color: #282828;
-  background: linear-gradient(145deg, #2c3e50, #4ca1af);
-  overflow-x: hidden;
-  transition: 0.5s;
-  padding-top: 60px;
-  box-shadow: 2px 0px 5px rgba(0,0,0,0.5);
-}
+    .sidenav {
+      height: 100%;
+      width: 0;
+      position: fixed;
+      z-index: 1;
+      top: 0;
+      left: 0;
+      background-color: #282828;
+      background: linear-gradient(145deg, #2c3e50, #4ca1af);
+      overflow-x: hidden;
+      transition: 0.5s;
+      padding-top: 60px;
+      box-shadow: 2px 0px 5px rgba(0,0,0,0.5);
+    }
 
-.sidenav a {
-  padding: 12px 8px 12px 32px;
-  text-decoration: none;
-  font-size: 20px;
-  color: #f0f0f0;
-  display: block;
-  transition: 0.3s;
-  font-family: "Arial", sans-serif;
-}
+    .sidenav a {
+      padding: 12px 8px 12px 32px;
+      text-decoration: none;
+      font-size: 20px;
+      color: #f0f0f0;
+      display: block;
+      transition: 0.3s;
+      font-family: "Arial", sans-serif;
+    }
 
-.sidenav a:hover {
-  color: #f39c12;
-  background-color: rgba(255,255,255,0.1);
-  padding-left: 40px;
-  border-left: 4px solid #f39c12;
-  transition: 0.2s ease-in;
-}
+    .sidenav a:hover {
+      color: #f39c12;
+      background-color: rgba(255,255,255,0.1);
+      padding-left: 40px;
+      border-left: 4px solid #f39c12;
+      transition: 0.2s ease-in;
+    }
 
-.sidenav .closebtn {
-  position: absolute;
-  top: 0;
-  right: 25px;
-  font-size: 36px;
-  margin-left: 50px;
-  color: #f0f0f0;
-  transition: 0.3s ease;
-}
+    .sidenav .closebtn {
+      position: absolute;
+      top: 0;
+      right: 25px;
+      font-size: 36px;
+      margin-left: 50px;
+      color: #f0f0f0;
+      transition: 0.3s ease;
+    }
 
-.sidenav .closebtn:hover {
-  color: #f39c12;
-}
+    .sidenav .closebtn:hover {
+      color: #f39c12;
+    }
 
-@media screen and (max-height: 450px) {
-  .sidenav {padding-top: 15px;}
-  .sidenav a {font-size: 18px;}
-}
+    @media screen and (max-height: 450px) {
+      .sidenav {padding-top: 15px;}
+      .sidenav a {font-size: 18px;}
+    }
 
-h2 {
-  color: #0a3d62;
-  font-family: "Arial", sans-serif;
-  font-size: 28px;
-  margin-top: 20px;
-  text-align: center;
-  position: absolute;
-  top: 20px;
-  left: 50%;
-  transform: translateX(-50%);
-}
+    h2 {
+      color: #0a3d62;
+      font-family: "Arial", sans-serif;
+      font-size: 28px;
+      margin-top: 20px;
+      text-align: center;
+      position: absolute;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+    }
 
-p {
-  font-size: 18px;
-  color: #444;
-  margin-top: 20px;
-  text-align: center;
-}
+    p {
+      font-size: 18px;
+      color: #444;
+      margin-top: 20px;
+      text-align: center;
+    }
 
-span {
-  color: #2c3e50;
-  font-family: "Arial", sans-serif;
-  font-weight: bold;
-  cursor: pointer;
-  font-size: 30px;
-  position: absolute;
-  top: 20px;
-  left: 20px;
-}
+    span {
+      color: #2c3e50;
+      font-family: "Arial", sans-serif;
+      font-weight: bold;
+      cursor: pointer;
+      font-size: 30px;
+      position: absolute;
+      top: 20px;
+      left: 20px;
+    }
 
-span:hover {
-  color: #f39c12;
-  transition: 0.3s ease;
-  text-align: center;
-}
+    span:hover {
+      color: #f39c12;
+      transition: 0.3s ease;
+      text-align: center;
+    }
 
-.menu-title {
-  color: #2c3e50;
-  font-family: "Arial", sans-serif;
-  font-weight: bold;
-  font-size: 24px;
-  position: absolute;
-  top: 20px;
-  right: 80px;
-  display: none;
-}
+    .menu-title {
+      color: #2c3e50;
+      font-family: "Arial", sans-serif;
+      font-weight: bold;
+      font-size: 24px;
+      position: absolute;
+      top: 20px;
+      right: 80px;
+      display: none;
+    }
 
-img {
-  margin-top: 20px;
-  max-width: 100%;
-  height: auto;
-}
-</style>
+    img {
+      margin-top: 20px;
+      max-width: 100%;
+      height: auto;
+    }
+  </style>
 </head>
 <link rel="manifest" href="/static/manifest.json">
 <body>
@@ -186,12 +186,12 @@ function checkForReminders() {
   const currentTime = now.toTimeString().split(' ')[0]; // Get current time in HH:MM:SS format
   const todayDate = now.toISOString().split('T')[0]; // Get today's date in YYYY-MM-DD format
 
-  const dbRequest = indexedDB.open("mydb", 1);
+  const dbRequest = indexedDB.open("Rdb", 1);
 
   dbRequest.onsuccess = function(event) {
     const db = event.target.result;
-    const transaction = db.transaction(["mytable"], "readonly");
-    const objectStore = transaction.objectStore("mytable");
+    const transaction = db.transaction(["Rtable"], "readonly");
+    const objectStore = transaction.objectStore("Rtable");
 
     const dateIndex = objectStore.index("taskDate");
     const taskCursor = dateIndex.openCursor(todayDate);

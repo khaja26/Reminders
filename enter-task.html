@@ -69,7 +69,7 @@
 
 <script>
 // Open (or create) the database
-const request = indexedDB.open("mydb", 1);
+const request = indexedDB.open("Rdb", 1);
 
 request.onerror = function(event) {
   console.error("Database error: " + event.target.errorCode);
@@ -78,7 +78,7 @@ request.onerror = function(event) {
 request.onupgradeneeded = function(event) {
   const db = event.target.result;
   // Create an object store for this database
-  const objectStore = db.createObjectStore("mytable", { keyPath: "id", autoIncrement: true });
+  const objectStore = db.createObjectStore("Rtable", { keyPath: "id", autoIncrement: true });
   objectStore.createIndex("taskDesc", "taskDesc", { unique: false });
   objectStore.createIndex("taskDate", "taskDate", { unique: false });
   objectStore.createIndex("fromTime", "fromTime", { unique: false });   
@@ -89,12 +89,12 @@ request.onupgradeneeded = function(event) {
 function saveTask(event) {
   event.preventDefault(); // Prevent the default form submission
   
-  const dbRequest = indexedDB.open("mydb", 1);
+  const dbRequest = indexedDB.open("Rdb", 1);
 
   dbRequest.onsuccess = function(event) {
     const db = event.target.result;
-    const transaction = db.transaction(["mytable"], "readwrite");
-    const objectStore = transaction.objectStore("mytable");
+    const transaction = db.transaction(["Rtable"], "readwrite");
+    const objectStore = transaction.objectStore("Rtable");
 
     // Gather the data from the form
     const taskData = {

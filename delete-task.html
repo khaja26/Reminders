@@ -128,7 +128,7 @@
 
 <script>
 // Open or create the IndexedDB database
-const request = indexedDB.open("mydb", 1);
+const request = indexedDB.open("Rdb", 1);
 
 request.onerror = function(event) {
   console.error("Database error: " + event.target.errorCode);
@@ -141,7 +141,7 @@ request.onsuccess = function(event) {
 
 request.onupgradeneeded = function(event) {
   db = event.target.result;
-  const objectStore = db.createObjectStore("mytable", { keyPath: "id", autoIncrement: true });
+  const objectStore = db.createObjectStore("Rtable", { keyPath: "id", autoIncrement: true });
   objectStore.createIndex("taskDesc", "taskDesc", { unique: false });
   objectStore.createIndex("taskDate", "taskDate", { unique: false });
   objectStore.createIndex("fromTime", "fromTime", { unique: false });   
@@ -153,8 +153,8 @@ function fetchTasksByDate(event) {
     event.preventDefault();
     const taskDate = document.getElementById("taskDate").value;
 
-    const transaction = db.transaction(["mytable"], "readonly");
-    const objectStore = transaction.objectStore("mytable");
+    const transaction = db.transaction(["Rtable"], "readonly");
+    const objectStore = transaction.objectStore("Rtable");
     const index = objectStore.index("taskDate");
 
     const request = index.getAll(taskDate); // Get all tasks for the date
@@ -213,8 +213,8 @@ function deleteSelectedTasks(event) {
         return;
     }
 
-    const transaction = db.transaction(["mytable"], "readwrite");
-    const objectStore = transaction.objectStore("mytable");
+    const transaction = db.transaction(["Rtable"], "readwrite");
+    const objectStore = transaction.objectStore("Rtable");
 
     let deleteCount = 0;
 

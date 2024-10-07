@@ -103,7 +103,7 @@
 
 <script>
 // Open or create the IndexedDB database
-const request = indexedDB.open("mydb", 1);
+const request = indexedDB.open("Rdb", 1);
 
 request.onerror = function(event) {
   console.error("Database error: " + event.target.errorCode);
@@ -119,8 +119,8 @@ function fetchTasksByDate(event) {
     event.preventDefault();
     const taskDate = document.getElementById("taskDate").value;
 
-    const transaction = db.transaction(["mytable"], "readonly");
-    const objectStore = transaction.objectStore("mytable");
+    const transaction = db.transaction(["Rtable"], "readonly");
+    const objectStore = transaction.objectStore("Rtable");
 
     const index = objectStore.index("taskDate");
     const request = index.getAll(taskDate); // Fetch all tasks for the selected date
@@ -155,8 +155,8 @@ function fetchTasksByDate(event) {
 function editSelectedTask() {
     const selectedTaskIndex = document.querySelector('input[name="selectedTask"]:checked');
     if (selectedTaskIndex) {
-        const transaction = db.transaction(["mytable"], "readonly");
-        const objectStore = transaction.objectStore("mytable");
+        const transaction = db.transaction(["Rtable"], "readonly");
+        const objectStore = transaction.objectStore("Rtable");
 
         const index = objectStore.index("taskDate");
         const taskDate = document.getElementById("taskDate").value;
@@ -189,8 +189,8 @@ function updateTask(event) {
         fromTime: document.getElementById("fromTimeCheck").checked ? fromTime : null        
     };
 
-    const transaction = db.transaction(["mytable"], "readwrite");
-    const objectStore = transaction.objectStore("mytable");
+    const transaction = db.transaction(["Rtable"], "readwrite");
+    const objectStore = transaction.objectStore("Rtable");
 
     const index = objectStore.index("taskDate");
     const request = index.getAll(taskDate);
