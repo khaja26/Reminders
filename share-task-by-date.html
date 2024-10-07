@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Share Reminders by Date</title>
+    <style>
+        body {
+            font-family: "Lato", sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h2 {
+            color: #0a3d62;
+        }
+
+        form {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        input[type="date"], button {
+            width: calc(100% - 20px);
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        button {
+            background-color: #0a3d62;
+            color: white;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #f39c12;
+        }
+
+        .taskDetails {
+            background-color: #ffffff;
+            padding: 10px;
+            margin-top: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .message {
+            margin-top: 20px;
+            color: #27ae60;
+            font-weight: bold;
+            display: none;
+        }
+
+        .task-item {
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<h2>Share Reminders by Date</h2>
+<form id="shareTaskForm">
+    <label for="taskDate">Choose Date:</label><br>
+    <input type="date" id="taskDate" name="taskDate" required><br><br>
+    <button type="button" onclick="fetchTasks()">Get Reminders</button>
+</form>
+
+<!-- Task Details will be displayed here -->
+<div class="taskDetails" id="taskDetails" style="display: none;">
+    <h3>Task Details</h3>
+    <div id="tasksContainer"></div>
+    <button type="button" onclick="shareTasks()">Share All Reminders</button>
+</div>
+
+<p class="message" id="shareMessage">Reminders Shared Successfully!</p>
+
+<script>
+// Open (or create) the database
+const request = indexedDB.open("mydb", 1);
+
+request.onerror = function(event) {
+  console.error("Database error: " + event.target.errorCode);
+};
+
+// Function to fetch tasks by date
+function fetchTasks() {
+  const selectedDate = document.getElementById("taskDate").value;
+  
+  if (!selectedDate) {
+    alert("Please select a date.");
+    return;
+  }
+
+  const dbRequest = indexedDB.open("mydb", 1);
+
+  dbRequest.onsuccess = function(event) {
+    const db = event.target.result;
+    const transaction = db.transaction(["mytable"], "readonly");
+    const objectStore = transaction.objectStore("mytable");
+
+    const index = objectStore.index("taskDate");
+    const request = index.getAll(selectedDate);
+
+    request.onsuccess = function(event) {
+      const tasks = event.target.result;
+      if (tasks.length > 0) {
+        document.getElementById("taskDetails").style.display = "block";
+        displayTasks(tasks);
+      } else {
+        alert("No tasks found for the selected date.");
+        document.getElementById("taskDetails").style.display = "none";
+      }
+    };
+
+    request.onerror = function(event) {
+      console.error("Error fetching tasks: ", event.target.error);
+    };
+  };
+
+  dbRequest.onerror = function(event) {
+    console.error("Error opening database: ", event.target.error);
+  };
+}
+
+// Function to display all tasks for the selected date
+function displayTasks(tasks) {
+  const tasksContainer = document.getElementById("tasksContainer");
+  tasksContainer.innerHTML = ''; // Clear previous tasks
+
+  tasks.forEach((task, index) => {
+    const taskItem = document.createElement('div');
+    taskItem.className = 'task-item';
+    
+    taskItem.innerHTML = `
+      <p><strong>Task ${index + 1}</strong></p>
+      <p><strong>Description:</strong> ${task.taskDesc}</p>
+      <p><strong>Time:</strong> ${task.fromTime}</p>       
+      <hr>
+    `;
+    tasksContainer.appendChild(taskItem);
+  });
+}
+
+ // Function to share all tasks
+function shareTasks() {
+  const taskItems = document.querySelectorAll('.task-item');
+
+  console.log('Number of tasks to share:', taskItems.length);
+
+  if (taskItems.length === 0) {
+    alert("No tasks available to share.");
+    return;
+  }
+
+  let taskData = '';
+  taskItems.forEach((taskItem, index) => {
+    const desc = taskItem.querySelector('p:nth-child(2)').textContent;
+    const fromTime = taskItem.querySelector('p:nth-child(3)').textContent;     
+    taskData += `Task ${index + 1}:\n${desc}\n${fromTime}\n\n`;
+  });
+
+  console.log('Sharing data:', taskData);
+
+  // Use the navigator.share API for sharing tasks
+  if (navigator.share) {
+    navigator.share({
+      title: 'Task Details',
+      text: taskData,
+    })
+    .then(() => {
+      console.log('Reminders shared successfully.');
+      document.getElementById("shareMessage").style.display = "block";
+    })
+    .catch((error) => {
+      console.error('Error sharing tasks:', error);
+      alert('An error occurred while sharing tasks.');
+    });
+  } else {
+    alert('Sharing is not supported in this environment.');
+  }
+}
+</script>
+
+</body>
+</html>
